@@ -27,6 +27,7 @@ class PersonneCreateView(CreateView):
     model = Personne
     template_name = 'personnes/personne_new.html'
     fields = ('nom',  'age', 'email')
+    success_url = '/personnes/'  # Redirige vers la liste des personnes après la création
 
 
 class PersonneUpdateView(UpdateView):
