@@ -1,0 +1,6 @@
+<h1>Supprimer Employé</h1>
+<form method="post">
+    {% csrf_token %}
+    Êtes-vous sûr de vouloir supprimer {{ employe.nom }} ?
+    <button type="submit">Oui, supprimer</button>
+</form>
