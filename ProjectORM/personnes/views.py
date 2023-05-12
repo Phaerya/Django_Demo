@@ -13,10 +13,28 @@ from .models import Personne
 class PersonneListView(ListView):
     model = Personne
     template_name = 'personnes/personne_list.html'
+    context_object_name = 'personne_list'
 
     def get_queryset(self):
-        personnes = Personne.objects.all()
-        return personnes
+        queryset = super().get_queryset()
+        nom = self.request.GET.get('nom')
+        age = self.request.GET.get('age')
+
+        if nom and age:
+            queryset = queryset.filter(nom=nom, age=age)
+        elif nom:
+            queryset = queryset.filter(nom=nom)
+        elif age:
+            queryset = queryset.filter(age=age)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['recherche_terminee'] = any([self.request.GET.get('nom'), self.request.GET.get('age')])
+        context['personne_list_complete'] = self.model.objects.all()
+        return context
+
 
 
 class PersonneDetailView(DetailView):

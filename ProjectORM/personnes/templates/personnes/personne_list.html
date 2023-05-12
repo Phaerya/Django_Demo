@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Liste des employés</h1>
-<ul>
-{% for personne in personne_list  %}
-    <li>{{ personne.nom }} - {{ personne.email }}</li>
-{% endfor %}
-</ul>
+  <h1>Liste des employés</h1>
+  <form action="{% url 'personne_list' %}" method="get">
+    <input type="text" name="nom" placeholder="Nom">
+    <input type="text" name="age" placeholder="Âge">
+    <button type="submit">Rechercher</button>
+  </form>
+
+  {% if recherche_terminee %}
+    <h2>Résultats de la recherche</h2>
+    <ul>
+    {% for personne in personne_list %}
+      <li>{{ personne.nom }} - {{ personne.email }} - {{ personne.age }}</li>
+    {% empty %}
+      <li>Aucun résultat trouvé</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+  <h2>Liste complète des employés</h2>
+  <ul>
+  {% for personne in personne_list_complete %}
+    <li>{{ personne.nom }} - {{ personne.email }} - {{ personne.age }}</li>
+  {% endfor %}
+  </ul>
 </body>
 </html>
